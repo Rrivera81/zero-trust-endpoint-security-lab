@@ -1,1 +1,75 @@
+# 🔐 Zero Trust Concepts in This Lab
 
+This document explains the core Zero Trust security principles applied in the lab and how they were implemented using practical tools like Group Policy, Active Directory, and endpoint security controls.
+
+---
+
+## 💡 What is Zero Trust?
+
+**Zero Trust** is a cybersecurity model based on the idea of "never trust, always verify." It assumes that threats can exist both **outside and inside** the network, so no user, device, or application is automatically trusted — even if they are inside the firewall.
+
+Instead of relying on perimeter-based defenses, Zero Trust emphasizes:
+- Strong identity verification
+- Least privilege access
+- Continuous monitoring
+- Strict enforcement of access policies
+
+---
+
+## 🛠️ How This Lab Applies Zero Trust
+
+| Zero Trust Principle | Lab Implementation |
+|----------------------|--------------------|
+| **Deny by Default** | Used Software Restriction Policies to block all applications except explicitly allowed ones |
+| **Least Privilege** | Created non-admin users with limited access and rights per department |
+| **Role-Based Access Control** | Segmented users using Active Directory Organizational Units and Security Groups |
+| **Strong Access Policies** | Applied GPOs to block access to command line, Control Panel, downloads, removable drives |
+| **Application Control** | Enforced via SRP/AppLocker to allow only trusted apps from approved directories |
+| **User Verification** | Domain login enforced, passwords set with complexity rules |
+| **Audit & Monitoring** | Policy violations logged in Event Viewer for forensic review |
+
+---
+
+## 🧱 Example Use Case Simulated
+
+- A user in the HR department attempts to launch a file downloaded from the internet.
+- Because the policy is **deny-by-default**, and Downloads is not an allowed path:
+  - The executable is **blocked**
+  - The attempt is **logged**
+  - The user is **prevented from bypassing** the restriction (no PowerShell/CMD)
+
+This mirrors real-world scenarios where Zero Trust prevents insider threat behavior or compromised endpoints from running unauthorized software.
+
+---
+
+## 🔄 Why This Model Matters
+
+Traditional security models assume anything inside the network can be trusted. But attackers often gain access through:
+- Phishing a user’s credentials
+- Exploiting an unpatched system
+- Misusing access rights
+
+With Zero Trust, even a valid login or internal IP address does not guarantee access. This model **slows attackers down**, increases detection, and reduces the blast radius of a breach.
+
+---
+
+## ✅ Key Benefits of the Lab Approach
+
+- No need for expensive third-party tools — enforced using **built-in Windows features**
+- Teaches fundamentals of real-world endpoint defense
+- Aligns with frameworks like **NIST 800-207**, **MITRE ATT&CK**, and **CISA Zero Trust Maturity Model**
+- Demonstrates **hands-on experience**, not just theory
+
+---
+
+## 🧠 Summary
+
+Zero Trust isn’t a single product — it’s a mindset.
+
+This lab puts that mindset into action using the tools available in most enterprise networks:
+- Active Directory
+- GPO
+- Windows Defender
+- Standard users and groups
+
+By focusing on **identity**, **access control**, and **policy enforcement**, the lab simulates how Zero Trust protects organizations from both internal and external threats.
