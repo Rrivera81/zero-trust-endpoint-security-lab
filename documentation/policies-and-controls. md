@@ -1,1 +1,105 @@
+# 🔐 Policies and Controls Implemented
 
+This document outlines the Group Policies (GPO), application controls, and access restrictions applied within the Zero Trust Endpoint Security Lab. These policies collectively enforce a deny-by-default security posture across all domain-joined machines and users.
+
+---
+
+## 🛡️ Zero Trust Principles Applied
+
+| Principle | How It Was Enforced |
+|-----------|----------------------|
+| **Least Privilege** | Standard user accounts for HR, Finance, Sales. Only IT/Admin users have elevated rights. |
+| **Deny-by-Default** | All unknown software is blocked unless explicitly allowed by policy. |
+| **User Segmentation** | Role-based access control using Organizational Units (OUs) and Security Groups. |
+| **Application Control** | SRP or AppLocker used to whitelist approved file paths and deny others. |
+| **Access Auditing** | Failed access attempts logged via Event Viewer. |
+
+---
+
+## 🧩 Group Policy Objects (GPOs)
+
+GPOs were applied at the OU level to enforce security posture by department and user role.
+
+### 🔹 General GPOs (Linked to Entire Domain)
+- Password complexity requirements
+- Disable guest accounts
+- Block anonymous enumeration
+- Disable legacy protocols (SMBv1, LM/NTLM fallback)
+
+### 🔹 Application Control GPO (Linked to `HR`, `Finance`, `Sales` OUs)
+- **Software Restriction Policies (SRP)**:
+  - Default Rule: **Disallowed**
+  - Allowed Paths:
+    - `%SystemRoot%\*`
+    - `%ProgramFiles%\*`
+    - `%SystemRoot%\System32\*`
+  - Disallowed Paths:
+    - `C:\Users\*\Downloads\*`
+    - Removable drives (`D:\`, `E:\`, etc.)
+
+> ✅ Outcome: Users could only run trusted apps from Windows/system folders.
+
+---
+
+### 🔹 User Restrictions (GPO)
+
+Applied to standard users in `HR`, `Finance`, and `Sales`:
+
+- Disable:
+  - Access to Control Panel and Settings
+  - Right-click context menu
+  - Task Manager (optional)
+  - CMD and PowerShell
+- Remove Run prompt from Start Menu
+- Hide system drives in File Explorer
+
+> ✅ Outcome: Prevented users from bypassing controls or accessing sensitive system functions.
+
+---
+
+## 🔧 Firewall & Network Controls
+
+> *(Optional depending on whether this was implemented in your lab)*
+
+- Enabled **Windows Defender Firewall** with rules:
+  - Deny all outbound traffic by default
+  - Allow only specific ports or protocols (e.g., RDP, DNS)
+- Configured host-only network to isolate lab traffic from host machine
+- Disabled file sharing and network discovery on endpoints
+
+---
+
+## 👤 Role-Based Access Control (RBAC)
+
+Security Groups:
+- `IT-Admins`: Full control of domain and policies
+- `HR-Staff`, `Finance-Staff`, `Sales-Staff`: Standard users
+- `VPN-Users`: Allowed remote access (if simulated)
+- `Remote-Desktop-Users`: Can use RDP to login
+
+OUs:
+- Users placed in departmental OUs for policy isolation
+- GPOs linked directly to each OU for fine-grained control
+
+---
+
+## 📄 Application Control Examples
+
+| App/File | User Attempting | Result |
+|----------|------------------|--------|
+| `notepad++.exe` in Downloads | HR User | ❌ Blocked |
+| `chrome.exe` in Program Files | IT User | ✅ Allowed |
+| PowerShell script from Desktop | Finance User | ❌ Blocked |
+| `cmd.exe` | Sales User | ❌ Blocked via GPO |
+| `winword.exe` | HR User | ✅ Allowed (pre-installed Office) |
+
+---
+
+## 📝 Summary
+
+All endpoint policies were applied through Group Policy in alignment with Zero Trust architecture. Each user was restricted to the minimum access needed for their role, and application execution was strictly controlled.
+
+This setup ensures that:
+- **Users cannot elevate their own access**
+- **Unauthorized applications are blocked by default**
+- **Security events are logged and traceable**
