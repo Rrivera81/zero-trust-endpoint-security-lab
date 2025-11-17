@@ -1,1 +1,53 @@
+# 🛡️ Project Overview: Zero Trust Endpoint Security Lab
 
+## 🎯 Objective
+
+The purpose of this lab is to simulate a modern enterprise security environment built on **Zero Trust principles**, focusing on application allowlisting and policy-driven access control. It demonstrates how to enforce least privilege, restrict unauthorized applications, and build a defensive system assuming breach by default.
+
+---
+
+## 🧠 What is Zero Trust?
+
+Zero Trust is a security model based on the principle of “**never trust, always verify**.” Instead of assuming everything inside a corporate network is safe, this model continuously validates identity, device posture, and access permissions.
+
+This lab applies Zero Trust concepts to endpoints by:
+- Enforcing application allowlisting using GPO
+- Limiting user privileges through group-based access control
+- Restricting access by user roles (IT, HR, Admin, etc.)
+- Blocking unapproved applications and monitoring behavior
+
+---
+
+## 🛠️ Lab Environment
+
+| Component | Purpose |
+|----------|---------|
+| **Windows Server 2019** | Domain Controller (DC), DNS, Group Policy |
+| **Windows 10 Clients** | Endpoint testing for policy enforcement |
+| **Active Directory** | Centralized user and device management |
+| **Group Policy Objects (GPO)** | Define and enforce restrictions |
+| **VirtualBox** | Host platform for running the lab |
+| **PowerShell & CMD** | Used for scripting, validation, and troubleshooting |
+
+---
+
+## 🧩 Key Features Implemented
+
+- ✅ **Domain Setup:** lab.local domain configured with proper DNS and user accounts
+- 👤 **User Segmentation:** HR, IT, Admin, and Sales users created and grouped
+- 🔒 **Application Control:** Policies created to block unauthorized executables
+- 🔐 **Access Control:** GPO rules limit access to control panel, registry, and more
+- 🚫 **Default-Deny Posture:** Only whitelisted applications allowed to run
+- 🧪 **Incident Simulation:** Created a test case where a restricted app is blocked
+
+---
+
+## 📁 Project Contents
+
+This lab includes:
+
+- 📖 Full step-by-step documentation (`lab-steps.md`)
+- 🧱 Policy definitions and exports (`configs/`)
+- 🖼️ Screenshots showing all major steps
+- 🚧 Troubleshooting notes based on real issues encountered
+- 🔐 Concepts and justification for all Zero Trust implementations
