@@ -1,1 +1,107 @@
+# 🧪 Endpoint Security Lab Steps
 
+This file documents the complete setup process for the Zero Trust Endpoint Security Lab, including domain setup, user creation, application control policies, and security testing.
+
+---
+
+## ⚙️ 1. Lab Environment Setup
+
+- Installed **VirtualBox** as the virtualization platform
+- Created the following virtual machines:
+  - `Server2019-DC` (Windows Server 2019)
+  - `Win10-IT`
+  - `Win10-HR`
+  - `Win10-Finance`
+- Configured a **host-only network adapter** for internal communication between VMs
+
+---
+
+## 🖥️ 2. Domain Controller Configuration
+
+- Promoted `Server2019-DC` to a Domain Controller using `lab.local` domain
+- Installed and configured:
+  - Active Directory Domain Services (AD DS)
+  - DNS role
+- Verified domain with:
+  - `ping lab.local`
+  - `nslookup` and `ipconfig /all` on client machines
+
+---
+
+## 👤 3. Active Directory Structure
+
+- Created OU structure:
+  - `Company`
+    - `IT`, `HR`, `Finance`, `Sales`
+  - `Workstations`
+    - `IT-Computers`, `HR-Computers`, etc.
+  - `Security Groups`
+    - `IT-Admins`, `HR-Staff`, `VPN-Users`, etc.
+- Created users:
+  - Example: `Emily.IT`, `Sarah.HR`, `Evan.Finance`
+- Assigned users to security groups and OUs
+
+---
+
+## 🧷 4. Client Domain Join
+
+- Joined each Windows 10 client to `lab.local` domain
+  - Used domain admin credentials to complete the join
+- Verified domain status with:
+  - `whoami`
+  - `systeminfo | findstr /B /C:"Domain"`
+
+---
+
+## 🔐 5. GPO Configuration (Application Control)
+
+- Created custom GPOs and linked them to OUs
+  - Restricted access to Control Panel, Run, Registry
+  - Applied **Software Restriction Policies (SRP)** for app control
+    - Deny all by default
+    - Allow specific paths (e.g., `C:\Program Files`)
+  - Optionally implemented **AppLocker** rules (if using Enterprise)
+
+---
+
+## 🚫 6. Zero Trust Enforcement
+
+- Logged into endpoint as non-admin users (HR, IT, etc.)
+- Attempted to run unauthorized apps (e.g., EXEs from Downloads folder)
+- Verified enforcement of:
+  - Deny-by-default posture
+  - Least privilege
+  - Blocked access to restricted tools or apps
+
+---
+
+## 🧪 7. Incident Simulation (Overview)
+
+- Simulated a restricted user attempting to run:
+  - Unsigned `.exe`
+  - Powershell script outside of whitelisted paths
+- Observed:
+  - Blocked execution message
+  - Event log entries in **Windows Event Viewer**
+
+---
+
+## 🪛 8. Troubleshooting Steps Taken
+
+- Resolved VM networking issues (host-only adapter misconfig)
+- Corrected domain join errors by adjusting DNS settings
+- Fixed login issues by resetting passwords and adjusting GPO logon rights
+
+---
+
+## 📸 9. Documentation and Evidence
+
+- Captured screenshots of:
+  - Domain join process
+  - GPO configuration
+  - Blocked applications
+  - User access testing
+- Organized all files in GitHub repository under:
+  - `/configs/`
+  - `/documentation/`
+  - `/screenshots/`
