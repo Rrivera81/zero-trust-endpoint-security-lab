@@ -1,1 +1,100 @@
+# 🚨 Incident Simulation: Unauthorized Application Execution
 
+This document outlines a simulation of an endpoint security incident within the Zero Trust lab environment. The scenario tests how the system responds to an unauthorized application executed by a non-privileged user.
+
+---
+
+## 🎯 Objective
+
+Simulate a user attempting to run an **unauthorized executable file** in violation of established application control policies. Monitor system response, enforcement behavior, and log generation.
+
+---
+
+## 🧪 Scenario Details
+
+- **User Role:** HR Staff (Standard User)
+- **Machine:** HR-PC01 (Windows 10, joined to lab.local domain)
+- **Action Simulated:** Attempt to run an `.exe` file from the Downloads folder
+- **Security Policy Enforced:** Software Restriction Policies (SRP) or AppLocker deny rules
+- **Expected Behavior:** Application is blocked and an event is logged
+
+---
+
+## 🔐 Pre-Configured Policy
+
+- GPO applied to the `HR` OU
+- Software Restriction Policy:
+  - Default Security Level: **Disallowed**
+  - Allow Rules:
+    - `C:\Program Files\*`
+    - `C:\Windows\*`
+- Disallowed Paths:
+  - `C:\Users\*\Downloads\*`
+  - Removable media (e.g., D:\*, E:\*)
+
+---
+
+## 🧫 Steps Performed
+
+1. Logged in as `SarahB@lab.local` (HR Staff)
+2. Downloaded a test `.exe` (e.g., Notepad++ installer) to the Downloads folder
+3. Double-clicked the file to attempt execution
+
+---
+
+## ❌ System Behavior
+
+- Execution was **blocked immediately**
+- Pop-up message:  
+  > *“This program is blocked by group policy. For more information, contact your system administrator.”*
+- Application did **not launch**
+
+---
+
+## 📊 Event Viewer Logs
+
+Navigated to:  
+**Event Viewer > Applications and Services Logs > Microsoft > Windows > AppLocker > EXE and DLL**
+
+**Logged Event Example:**
+
+| Field | Value |
+|-------|-------|
+| Event ID | 8004 |
+| Source | AppLocker |
+| User | LAB\SarahB |
+| File Path | `C:\Users\SarahB\Downloads\notepad++.exe` |
+| Outcome | Denied by Rule |
+
+Alternatively, for SRP:  
+**Event Viewer > Windows Logs > Application**  
+Look for **Event ID 865** (Software Restriction Policy violation)
+
+---
+
+## 🧩 Security Validation
+
+✔️ Unauthorized executable blocked  
+✔️ Event generated and viewable  
+✔️ No privilege escalation or security bypass possible  
+✔️ Demonstrates Zero Trust enforcement in action
+
+---
+
+## 📸 Screenshot Reference
+
+> See `/screenshots/` for supporting images:
+- Blocked `.exe` popup
+- Event Viewer logs
+- GPO SRP settings
+
+---
+
+## 📝 Summary
+
+This simulation validates the lab's ability to **detect and prevent** unapproved user behavior on endpoints. It replicates a real-world security control scenario where users are restricted by policy, not just intent.
+
+The Zero Trust model held up by:
+- Blocking non-whitelisted software
+- Providing clear system feedback
+- Logging violations for auditing and incident response
