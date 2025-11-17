@@ -1,1 +1,87 @@
+# 🔐 Zero Trust Endpoint Security Lab
 
+A practical cybersecurity lab designed to simulate a Zero Trust enterprise environment. This lab demonstrates key Zero Trust security concepts such as application allowlisting, policy-driven access control, and least privilege enforcement using Windows Server and Windows 10 endpoints.
+
+---
+
+## 🧠 Project Overview
+
+This project recreates a realistic corporate environment in which endpoint security is enforced through policy, not trust. Using Active Directory, Group Policy Objects (GPO), and built-in Windows tools, I applied a deny-by-default security model across multiple users and machines to replicate modern Zero Trust architecture in a lab setting.
+
+---
+
+## 🎯 Key Objectives
+
+- Apply **Zero Trust principles** to endpoint security
+- Create **application control policies** using GPO and Software Restriction Policies (SRP)
+- Enforce **least privilege access** across standard and privileged users
+- Demonstrate how **policy-driven restrictions** block unauthorized behavior
+- Simulate **basic incident detection and response scenarios**
+
+---
+
+## 🛠️ Tools & Technologies
+
+| Technology | Purpose |
+|------------|---------|
+| VirtualBox | Virtual environment setup |
+| Windows Server 2019 | Domain controller, Group Policy, DNS |
+| Windows 10 | Endpoint testing for different user types |
+| Active Directory | Centralized identity and access management |
+| Group Policy (GPO) | Enforce security configurations and app control |
+| Windows Firewall | Network-level access enforcement |
+| PowerShell / CMD | Scripting, diagnostics, configuration |
+
+---
+
+## 🧩 Features & Highlights
+
+- 🛑 **Application Allowlisting:** Only approved applications can run
+- 👤 **User Segmentation:** Different access levels for Admin, IT, and HR users
+- 🔒 **Policy-Driven Control:** All access managed centrally through GPO
+- 🚫 **Blocked Executables:** SRP and AppLocker policies in place (depending on version)
+- 🧪 **Incident Simulation:** Demonstrates a blocked user action + logs
+- 📸 **Screenshots & Documentation** of full configuration
+
+---
+
+## 📷 Screenshots
+
+> *Located in `/screenshots` folder — a few sample visuals are below:*
+
+- ✅ Domain join verification
+- 🔐 GPO app control settings
+- 🚫 Blocked `.exe` popup
+- 👤 User login to restricted desktop
+- 🔎 Windows Event Viewer showing blocked app
+
+---
+
+## 📂 Project Structure
+zero-trust-endpoint-lab/
+├── documentation/
+│   ├── project-overview.md
+│   ├── endpoint-security-lab-steps.md
+│   ├── policies-and-controls.md
+│   ├── incident-simulation.md
+│   ├── zero-trust-concepts.md
+│   └── troubleshooting-notes.md
+│
+├── configs/
+│   ├── endpoint-settings.txt
+│   ├── network-overview.txt
+│   ├── zero-trust-rules.txt
+│   └── policy-export.json
+│
+├── screenshots/
+│   ├── (labeled .png/.jpg files showing progress)
+│
+└── README.md
+---
+
+## 📌 What I Learned
+
+- Hands-on experience enforcing Zero Trust policies without third-party tools
+- Deeper understanding of how GPO, SRP, and user permissions intersect
+- Improved ability to document technical labs clearly and professionally
+- Familiarity with incident documentation and response
